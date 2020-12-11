@@ -21,6 +21,8 @@ popd
 mkdir package/community
 pushd package/community
 
+git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall.git
+
 # Add Lienol's Packages
 git clone --depth=1 https://github.com/Lienol/openwrt-package
 
