@@ -110,7 +110,7 @@ sed -i '/exit/i\chmod +x /bin/ipv6-helper' zzz-default-settings
 popd
 
 # Mod ipv6-helper.sh
-sed -i '/filter_aaaa/d;/commit dhcp/d' ../scripts/ipv6-helper.sh
+# sed -i '/filter_aaaa/d;/commit dhcp/d' ../scripts/ipv6-helper.sh
 
 # Remove orig kcptun
 rm -rf ./feeds/packages/net/kcptun
