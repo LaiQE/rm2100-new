@@ -8,50 +8,70 @@
 # Modify default IP
 #sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_generate
 
-# Add luci-app-ssr-plus
-pushd package/lean
-git clone --depth=1 https://github.com/fw876/helloworld
+# Clone Lean's latest sources.
+pushd package
+git clone --depth=1 https://github.com/coolsnowwolf/lede
+popd
 
-## Add Project OpenWrt's autocore
-# rm -rf autocore
-# svn co https://github.com/project-openwrt/openwrt/trunk/package/lean/autocore
+# Copy Lean's packages to ./package/lean.
+mkdir package/lean
+pushd package/lede/package/lean
+cp -r {adbyby,automount,baidupcs-web,coremark,ddns-scripts_aliyun,ddns-scripts_dnspod,dns2socks,ipt2socks,ipv6-helper,kcptun,luci-app-adbyby-plus,luci-app-arpbind,luci-app-autoreboot,luci-app-baidupcs-web,luci-app-cifs-mount,luci-app-cpufreq,luci-app-familycloud,luci-app-filetransfer,luci-app-frpc,luci-app-n2n_v2,luci-app-netdata,luci-app-nfs,luci-app-nps,luci-app-ps3netsrv,luci-app-softethervpn,luci-app-usb-printer,luci-app-unblockmusic,luci-app-verysync,luci-app-vsftpd,luci-app-webadmin,luci-app-xlnetacc,luci-lib-fs,microsocks,n2n_v2,npc,pdnsd-alt,proxychains-ng,ps3netsrv,redsocks2,shadowsocksr-libev,simple-obfs,softethervpn5,srelay,tcpping,trojan,UnblockNeteaseMusic,UnblockNeteaseMusicGo,v2ray,v2ray-plugin,verysync,vsftpd-alt,xray} "../../../lean"
+popd
+
+# Default settings
+pushd package/lean
+git clone --depth=1 https://github.com/SuLingGG/default-settings
+
+# Add Project OpenWrt's autocore
+rm -rf autocore
+svn co https://github.com/project-openwrt/openwrt/branches/master/package/lean/autocore
+
+# Add luci-app-ssr-plus
+git clone --depth=1 https://github.com/fw876/helloworld
+rm -rf helloworld/luci-app-ssr-plus/po/zh_Hans
+
+popd
+
+# Clean Lean's code
+pushd package
+rm -rf lede
 popd
 
 # Clone community packages to package/community
 mkdir package/community
 pushd package/community
 
-git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall.git
-
 # Add Lienol's Packages
 git clone --depth=1 https://github.com/Lienol/openwrt-package
+
+# Add luci-app-passwall
+git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
 
 # Add mentohust & luci-app-mentohust.
 git clone --depth=1 https://github.com/BoringCat/luci-app-mentohust
 git clone --depth=1 https://github.com/KyleRicardo/MentoHUST-OpenWrt-ipk
 
-# Add ServerChan
+# Add ServerChan.
 git clone --depth=1 https://github.com/tty228/luci-app-serverchan
 
-# Add OpenClash
-git clone --depth=1 -b master https://github.com/vernesong/OpenClash
+# Add OpenClash.
+git clone -b master --depth=1 https://github.com/vernesong/OpenClash
 
-# Add luci-app-onliner (need luci-app-nlbwmon)
+# Add luci-app-onliner. (need luci-app-nlbwmon)
 git clone --depth=1 https://github.com/rufengsuixing/luci-app-onliner
 
 # Add luci-app-adguardhome
 svn co https://github.com/Lienol/openwrt/trunk/package/diy/luci-app-adguardhome
 svn co https://github.com/Lienol/openwrt/trunk/package/diy/adguardhome
 
-# Add luci-app-diskman
-git clone --depth=1 https://github.com/lisaac/luci-app-diskman
+# Add openwrt-iptvhelper.
+git clone --depth=1 https://github.com/riverscn/openwrt-iptvhelper
+
+# Add luci-app-diskman.
+git clone --depth=1 https://github.com/SuLingGG/luci-app-diskman
 mkdir parted
 cp luci-app-diskman/Parted.Makefile parted/Makefile
-
-# Add luci-app-dockerman
-rm -rf ../lean/luci-app-docker
-git clone --depth=1 https://github.com/KFERMercer/luci-app-dockerman
-git clone --depth=1 https://github.com/lisaac/luci-lib-docker
 
 # Add luci-app-gowebdav
 git clone --depth=1 https://github.com/project-openwrt/openwrt-gowebdav
@@ -60,9 +80,20 @@ git clone --depth=1 https://github.com/project-openwrt/openwrt-gowebdav
 git clone --depth=1 https://github.com/jerrykuku/luci-app-jd-dailybonus
 
 # Add luci-theme-argon
-git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
+git clone --depth=1 https://github.com/jerrykuku/luci-theme-argon
 git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config
-rm -rf ../lean/luci-theme-argon
+
+# Add smartdns
+svn co https://github.com/pymumu/smartdns/trunk/package/openwrt ../smartdns
+svn co https://github.com/project-openwrt/openwrt/trunk/package/ntlf9t/luci-app-smartdns ../luci-app-smartdns
+
+# Add luci-udptools
+git clone --depth=1 https://github.com/zcy85611/openwrt-luci-kcp-udp
+
+# Add luci-app-dockerman
+git clone --depth=1 https://github.com/lisaac/luci-app-dockerman
+sed -i 's/+docker-ce/+docker/g' luci-app-dockerman/applications/luci-app-dockerman/Makefile
+git clone --depth=1 https://github.com/lisaac/luci-lib-docker
 
 # Add tmate
 git clone --depth=1 https://github.com/project-openwrt/openwrt-tmate
@@ -70,44 +101,4 @@ git clone --depth=1 https://github.com/project-openwrt/openwrt-tmate
 # Add subconverter
 git clone --depth=1 https://github.com/tindy2013/openwrt-subconverter
 
-# Add gotop
-svn co https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw/gotop
-
-# Add smartdns
-svn co https://github.com/pymumu/smartdns/trunk/package/openwrt ../smartdns
-svn co https://github.com/project-openwrt/openwrt/trunk/package/ntlf9t/luci-app-smartdns ../luci-app-smartdns
-
-# Add udptools
-git clone --depth=1 https://github.com/bao3/openwrt-udp2raw
-git clone --depth=1 https://github.com/bao3/openwrt-udpspeeder
-git clone --depth=1 https://github.com/bao3/luci-udptools
-
-# Add OpenAppFilter
-git clone --depth=1 https://github.com/destan19/OpenAppFilter
-popd
-
-# Mod zzz-default-settings
-pushd package/lean/default-settings/files
-sed -i "/commit luci/i\uci set luci.main.mediaurlbase='/luci-static/argon'" zzz-default-settings
-sed -i '/http/d' zzz-default-settings
-sed -i '/exit/i\chmod +x /bin/ipv6-helper' zzz-default-settings
-popd
-
-# Fix libssh
-pushd feeds/packages/libs
-rm -rf libssh
-svn co https://github.com/openwrt/packages/trunk/libs/libssh
-popd
-
-## Fix mt76 wireless driver
-# pushd package/kernel/mt76
-# rm -f Makefile
-# wget https://raw.githubusercontent.com/openwrt/openwrt/e12ac405525c29a6b6195e6259d769715919560c/package/kernel/mt76/Makefile
-# sed -i '/mt7662u_rom_patch.bin/a\\techo mt76-usb disable_usb_sg=1 > $\(1\)\/etc\/modules.d\/mt76-usb' Makefile
-# popd
-
-# Add po2lmo
-git clone https://github.com/openwrt-dev/po2lmo.git
-pushd po2lmo
-make && sudo make install
 popd
