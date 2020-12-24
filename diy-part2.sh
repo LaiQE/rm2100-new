@@ -21,7 +21,7 @@ popd
 
 # Default settings
 pushd package/lean
-git clone --depth=1 https://github.com/SuLingGG/default-settings
+# git clone --depth=1 https://github.com/SuLingGG/default-settings
 
 # Add Project OpenWrt's autocore
 rm -rf autocore
@@ -103,11 +103,11 @@ git clone --depth=1 https://github.com/tindy2013/openwrt-subconverter
 
 popd
 # Mod zzz-default-settings
-pushd package/lean/default-settings/files
-sed -i "/commit luci/i\uci set luci.main.mediaurlbase='/luci-static/argon'" zzz-default-settings
-sed -i '/http/d' zzz-default-settings
-sed -i '/exit/i\chmod +x /bin/ipv6-helper' zzz-default-settings
-popd
+# pushd package/lean/default-settings/files
+# sed -i "/commit luci/i\uci set luci.main.mediaurlbase='/luci-static/argon'" zzz-default-settings
+# sed -i '/http/d' zzz-default-settings
+# sed -i '/exit/i\chmod +x /bin/ipv6-helper' zzz-default-settings
+# popd
 
 # Mod ipv6-helper.sh
 # sed -i '/filter_aaaa/d;/commit dhcp/d' ../scripts/ipv6-helper.sh
