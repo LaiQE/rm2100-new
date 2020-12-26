@@ -39,6 +39,8 @@
 # popd
 
 # Clone community packages to package/community
+
+# rm -rf package/feeds/luci/luci-theme-argon*
 mkdir package/community
 pushd package/community
 
@@ -81,7 +83,9 @@ git clone --depth=1 https://github.com/project-openwrt/openwrt-gowebdav
 git clone --depth=1 https://github.com/jerrykuku/luci-app-jd-dailybonus
 
 # Add luci-theme-argon
-git clone --depth=1 https://github.com/jerrykuku/luci-theme-argon
+# 这里要18.06的才行
+git clone -b 18.06 --depth=1 https://github.com/jerrykuku/luci-theme-argon.git  
+# git clone --depth=1 https://github.com/jerrykuku/luci-theme-argon
 git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config
 
 # Add smartdns
