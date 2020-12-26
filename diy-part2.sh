@@ -48,6 +48,9 @@ pushd package/community
 # Add luci-app-passwall
 # git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
 
+svn co https://github.com/LaiQE/dragino2/trunk/package/teasiu/phtunnel
+svn co https://github.com/LaiQE/dragino2/trunk/package/teasiu/luci-app-phtunnel
+
 # Add mentohust & luci-app-mentohust.
 git clone --depth=1 https://github.com/BoringCat/luci-app-mentohust
 git clone --depth=1 https://github.com/KyleRicardo/MentoHUST-OpenWrt-ipk
